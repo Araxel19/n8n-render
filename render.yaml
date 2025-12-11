@@ -3,10 +3,8 @@ services:
     name: n8n-render
     env: docker
     plan: free
-    branch: master
-    repo: https://github.com/Araxel19/n8n-render
-    healthCheckPath: /
-    dockerfilePath: Dockerfile
+    dockerImage: n8nio/n8n:latest
+    autoDeploy: true
     envVars:
       - key: N8N_BASIC_AUTH_ACTIVE
         value: "true"
@@ -15,10 +13,12 @@ services:
       - key: N8N_BASIC_AUTH_PASSWORD
         value: superclave123
       - key: N8N_HOST
-        value: n8n-render.onrender.com
+        value: ${RENDER_EXTERNAL_HOSTNAME}
       - key: N8N_EDITOR_BASE_URL
-        value: https://n8n-render.onrender.com
+        value: https://${RENDER_EXTERNAL_HOSTNAME}
       - key: WEBHOOK_URL
-        value: https://n8n-render.onrender.com/
+        value: https://${RENDER_EXTERNAL_HOSTNAME}/
       - key: DB_TYPE
         value: sqlite
+      - key: N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS
+        value: "true"
